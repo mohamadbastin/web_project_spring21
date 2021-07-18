@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+    <title></title>
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet"  href="/styleofproject.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="socket.js" type="application/javascriptd"></script>
+	<script src="js/libs/jquery-1.4.2.min.js" type="application/javascript"></script>
+	<script src="js/libs/jquery-ui-1.8.custom.min.js" type="application/javascript"></script>
+	<script src="js/libs/console.js" type="application/javascript"></script>
+	<script src="js/libs/base64.js" type="application/javascript"></script>
+	<script src="js/libs/canvas2image.js" type="application/javascript"></script>
+	<script src="js/whiteboard.js" type="application/javascript"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!-- <script src="url(https://cdn.socket.io/socket.io-1.4.5.js)"></script> -->
+
+    <script src="attendees.js" type="application/javascript"></script>
+    <script src="chat.js" type="application/javascript"></script>
+    <script src="js/whiteboardui.jquery.js" type="application/javascript"></script> 
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- <script type="text/javascript">
+    $(document).ready(function(){
+	    WhiteboardUi.init($("#canvas"));
+        attendees.init();
+        groupChat.init();
+    });
+</script> -->
+
+<script src="/socket.io/socket.io.js"></script>
+<!-- <script src="/node_modules/socket.io/client-dist/socket.io.js"></script> -->
+<script> 
+
+    /* All the data we have */
+
+    //console.log(window.Whiteboard.events)
+    //console.log(attendees.arrayVariable);
+    //console.log(attendees.arrayVariablerole);
+    //console.log(attendees.user_name);
+    //console.log(attendees.user_role);
+    //console.log(groupChat.mesgs);
+
+</script>
+
+</head>
+<body>
+
+    <div class="row">
+        <div id="whiteboard">
+            <div id="menubar">
+                <ul style="margin-top: 15px;" id="ul">
+                    <li id="3-dots"><button class="menButtons"><i class="fas fa-ellipsis-h" onclick="menuF()"></i></button></li>
+                    <br>
+                    <h6 id="tools-box">Tools</h6>
+                    <li id="li-inline"><button class="menButtons" id="button_pencil" type="button" id="drawpolyline"><i class="fas fa-pen"></i></button></li>
+                    <li id="li-inline"><button class="menButtons" id="button_eraser" type="button"><i class="fas fa-eraser"></i></button></li>
+                    <li id="li-inline"><i class="fas fa-slash"></i></li>
+                    <br id="space-maker" style="display: none;">
+                    <li id="li-inline"><button class="menButtons" id="button_oval" type="button"><i class="far fa-circle"></i></button></li>
+                    <li id="li-inline"><button class="menButtons" id="button_rectangle" type="button"><i class="far fa-square"></i></button></li>
+                    <li id="li-inline"><button class="menButtons" id="button_text" type="button"><i class="fas fa-font"></i></button></li>
+                    <li id="file-inp"><input class="custom-file-input" type="file" id="button_img" accept = "image/*"></li>
+                    
+                    
+                    <div id="color-box">
+                        <h6 >Color</h6>
+                        <div id="red" value="#FF0000" class='color-field' style="background-color: #FF0000;"></div>
+                        <div id="green" value="#0800FF" class='color-field' style="background-color: #0800FF;"></div>
+                        <div id="blue" value="#02FF00" class='color-field' style="background-color: #02FF00;"></div>
+                        <div id="purple" value="#CC00FF" class='color-field' style="background-color: #CC00FF;"></div>
+
+                        <div id="aqua" value="#34F5EE" class='color-field' style="background-color: #34F5EE;"></div>
+                        <div id="yellow" value="#FFFF00" class='color-field' style="background-color: #FFFF00;"></div>
+                        <div id="orange" value="#FF9200" class='color-field' style="background-color: #FF9200;"></div>
+                        <div id="dark-green" value="#0F9600" class='color-field' style="background-color: #0F9600;"></div>
+
+                        <div id="black" value="#000000" class='color-field' style="background-color: black;"></div>
+                        <div id="white" value="#FFFFFF" class='color-field' style="background-color: white;"></div>
+
+                    </div>
+
+                    <div id="font-size-box">
+                        <h6 >Font size</h6>
+                        <input type="range" min="1" max="30" value="5" id="pencil_width_id">
+                    </div>
+
+                    <br>
+                    <h6 id="media-box">Media</h6>
+                    <li id="li-inline"><button class="menButtons" type="button"><i class="fas fa-microphone"></i></button></li>
+                    <li id="li-inline"><button class="menButtons" type="button"><i class="fas fa-share"></i></button></li>
+                    <li id="li-inline"><button class="menButtons" type="button" id="button_animate"><i class="fas fa-step-forward"></i></button></li>
+
+                </ul>
+            </div>
+            <div id="drawsection2">
+                <div id="canvas-container2">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div><!-- /drawsection -->
+
+        </div>
+
+        <div id="chatmat_main">
+
+            <div id="chatmat_upper">        <!--  The attendees list  -->
+                <div id="attendees_title">Attendees</div>
+                <div id="chatmat"></div>
+            </div>
+
+            <div id="chatmat_lower">  <!-- The chatbox -->
+                <div id="attendees_title"> Chatbox </div>
+                <div id="contain_chatbox">
+                    <div id="chatbox"></div>
+                </div>
+                <div id="input">
+                    <form action="" name="chatbox" style="height: 100%; width: 100%;">
+                      <textarea type="text" name="msg" id="msg" autocomplete="off" ></textarea>
+                    </form>
+                    <button class="subbt" type="submit" name="submsg" id="submsg" value="Send" style="display: none;">
+                      send
+                    </button>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var flag = false; // false means the menu is NOT expanded
+        function menuF(){
+            
+            if (flag === false){
+                flag = true;
+                document.getElementById("menubar").style.width = "160px";
+                document.getElementById("3-dots").style.textAlign = "start";
+                document.getElementById("menubar").style.padding = "2px 15px";
+                document.getElementById("file-inp").style.display = "none";
+                document.getElementById("space-maker").style.display = "block";
+                document.getElementById("tools-box").style.display = "block";
+                document.getElementById("color-box").style.display = "block";
+                document.getElementById("font-size-box").style.display = "block";
+                document.getElementById("media-box").style.display = "block";
+
+                var oInput = document.getElementById('ul');
+                //console.log(oInput.childNodes);
+                for(i = 0; i < oInput.childNodes.length; i++){
+                    if (oInput.childNodes[i].id == "li-inline") {
+                        oInput.childNodes[i].style.display = "inline-block";
+                        oInput.childNodes[i].style.margin = "7px";
+                    }
+                }
+            }
+            else{
+                flag = false;
+                document.getElementById("menubar").style.width = "60px";
+                document.getElementById("3-dots").style.textAlign = "center";
+                document.getElementById("menubar").style.padding = "0";
+                document.getElementById("file-inp").style.display = "block";
+                document.getElementById("space-maker").style.display = "none";
+                document.getElementById("tools-box").style.display = "none";
+                document.getElementById("color-box").style.display = "none";
+                document.getElementById("font-size-box").style.display = "none";
+                document.getElementById("media-box").style.display = "none";
+
+                var oInput = document.getElementById('ul');
+                //console.log(oInput.childNodes);
+                for(i = 0; i < oInput.childNodes.length; i++){
+                    if (oInput.childNodes[i].id == "li-inline") {
+                        oInput.childNodes[i].style.display = "block";
+                        oInput.childNodes[i].style.margin = "18px";
+                    }
+                }
+            }
+        }
+        
+        </script>
+</body>
+</html>
+
+
+<script type="module">
+    // var socket = io();
+    // var socket = io.connect('http://localhost:3000');
+    import { socket } from './socket.js';
+
+    $(document).ready(function(){
+	    WhiteboardUi.init($("#canvas"));
+        attendees.init();
+        groupChat.init(socket);
+    });
+
+
+    socket.emit('name', attendees.user_name);
+
+    socket.on('added', function(msg){
+        console.log('new' + msg)
+      });
+
+
+    socket.on('new-message', function(msg){
+        groupChat.pushMssg(msg);
+    })
+
+   
+</script>
