@@ -90,10 +90,13 @@ window.Whiteboard = {
     coordinates: [0,0],
     events: [],
     animationind: 0,
-
+    socket: null,
     drawColor: '#000000',
+    temp: null,
 
     init: function(canvasid) {
+        // this.sock = sockett;
+        // console.log(sockett);
 	    // set the canvas width and height
 	    // the offsetWidth and Height is default width and height
 	    this.canvas = document.getElementById(canvasid);
@@ -122,11 +125,24 @@ window.Whiteboard = {
     
             /*zahra end */
 
+    setSock: function(sock){
+        // console.log(sock);
+        Whiteboard.socket = sock;
+        // console.log("thisthis r", Whiteboard.socket);
+    },
+
     execute: function(wbevent, firstexecute) {
-        //console.log("execute running")
-    
-        if (this.events.length > 0){
-            console.log(this.events);
+        // console.log("execute running")
+        
+        if (this.events.length > 1){
+            // console.log(this.events);
+            // if (this.events !== this.temp){
+                this.socket.emthis.socket.emit("whiteboard", this.events);
+                // console.log("thisthis e", Whiteboard.socket);it("whiteboard", this.events);
+                // console.log("im here");
+                this.temp = this.events;
+            // }
+            
         }
         
         var type = wbevent.type;
@@ -397,6 +413,14 @@ window.Whiteboard = {
 	        //var dtime = Whiteboard.events[Whiteboard.animationind+1].time - Whiteboard.events[Whiteboard.animationind].time;
             //dtime = dtime / 1000;
             setTimeout(Whiteboard.animatenext,0);
+        }
+    },
+
+    draw_whiteboard: function(event_list) {
+        // console.log("im in draw");
+        for (i=0; i<event_list.length; i++){
+            // console.log("im in draw for");
+            Whiteboard.execute(event_list[i], false);
         }
     },
 

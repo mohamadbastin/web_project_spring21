@@ -42,17 +42,28 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+var channels = {};
+var sockets = {};
 
+var names = {};
+var roles = {}
 
 
 io.on('connection', (socket) => {
 
-    console.log('a user connected');
-    // add user to list 
-    // send new list of users
+  socket.channels = {};
+  sockets[socket.id] = socket;
+
+  console.log("[" + socket.id + "] connection accepted");
+
+  // emit the new user 
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+      for (var channel in socket.channels) {
+        part(channel);
+      }
+      console.log("[" + socket.id + "] disconnected");
+      delete sockets[socket.id];
         //remove user from list
         //send new list of users 
     });
@@ -85,11 +96,24 @@ io.on('connection', (socket) => {
     socket.on('whiteboard', (msg) => {
 
          // broadcast new white board
+         console.log('boz');
+        socket.broadcast.emit("whiteboard", msg);
 
     });
 
+    socket.on("im new", (msg) => {
+      names.push(msg);
+      roles.push("host");
+
+      io.emit("new user", msg);
+    });
+
+    socket.on("get initial att", (msg)=>{
+        socket.emit("get inistial att", {names, roles})
+    });
+
     
-});
+  });
 
 server.listen(3000, () => {
   console.log('listening on *:3000');

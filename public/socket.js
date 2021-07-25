@@ -4,4 +4,4 @@ var socket = io.connect('http://localhost:3000');
     // socket.on('added', function(msg){
     //     console.log('new' + msg)
     //   });
-export { socket };
+export { socket}
