@@ -344,6 +344,7 @@ window.Whiteboard = {
 			    height: this.canvas.height/this.canvas.offsetHeight};
     },
 
+    
     upimg: function(){ /////////////////// fix the width and height of the 
         let imgInput = document.getElementById('button_img');
         imgInput.addEventListener('change', function(e) {
