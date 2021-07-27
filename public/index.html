@@ -1,42 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join the session</title>
     <script src="attendees.js" type="application/javascript"></script>
     <script src="socket.js" type="application/javascriptd"></script>
     <script src="chat.js" type="application/javascript"></script>
-    <script src="js/libs/jquery-1.4.2.min.js" type="application/javascript"></script>
-	<script src="js/libs/jquery-ui-1.8.custom.min.js" type="application/javascript"></script>
+    <script
+      src="js/libs/jquery-1.4.2.min.js"
+      type="application/javascript"
+    ></script>
+    <script
+      src="js/libs/jquery-ui-1.8.custom.min.js"
+      type="application/javascript"
+    ></script>
     <script src="/socket.io/socket.io.js"></script>
 
+    <script type="text/javascript"></script>
+  </head>
+
+  <form>
+    <input type="text" id="enter_username" />
+  </form>
+  <button type="submit" id="submit_username" onclick="dostuff()">Enter</button>
 
 
+  <script>
+      function dostuff() {
+      var id = Math.random(1000) + Math.random(100) + Math.random(1000);
 
-    <script type="text/javascript">
-        
-    </script>
-</head>
+      localStorage.setItem("user_id", id);
 
-    <form>
-        <input type="text" id="enter_username">
-    </form>
-    <button type="submit" id="submit_username">Enter</button>
+      console.log(localStorage.getItem("user_id"));
+      var username = document.getElementById("enter_username").value;
+      attendees.addUser(id, username);
+    }
+  </script>
 
-    <script type="module">
-    import { socket } from './socket.js';
+  <script type="module">
+    import { socket } from "./socket.js";
 
-    $(document).ready(function(){
-            attendees.join();
-            attendees.setSock(socket);
-        });
+    $(document).ready(function () {
+      attendees.join();
+      attendees.setSock(socket);
+    });
 
-
-    document.getElementById("submit_username").addEventListener("click", attendees.addUser);
-        
-    </script>
-
+    
+    // document
+    //   .getElementById("submit_username")
+    //   .addEventListener("click", attendees.addUser);
+  </script>
 </html>
-

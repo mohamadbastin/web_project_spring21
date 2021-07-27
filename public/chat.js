@@ -12,8 +12,10 @@ var groupChat = {
 
   chat_box : "",
   username : "",
+  user_id: 0,
 
-  init : function(socket){
+  init : function(user_id, socket){
+    this.user_id = user_id;
       this.chat_box = document.getElementById("chatbox");
       this.username = attendees.user_name;
       for (var i in this.mesgs) {
@@ -34,7 +36,7 @@ var groupChat = {
   send : function(socket){
     //var msg = document.getElementById("msg");
     if (msg.value.length > 0) {
-      var newmsg = { user: this.username , text: msg.value };
+      var newmsg = { user: this.user_id , text: msg.value };
       //this.mesgs.push(newmsg); // get a newmsg and push it
       // groupChat.pushMssg(newmsg);
       // import { socket } from './socket.js';
@@ -46,7 +48,8 @@ var groupChat = {
 
   },
 
-  pushMssg : function(newMssg){
+  pushMssg : function(name, msssg){
+    var newMssg = {user: name, text: msssg};
       this.mesgs.push(newMssg);
       var msg = document.getElementById("msg");
       msg.value = "";
