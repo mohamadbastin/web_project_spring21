@@ -137,7 +137,7 @@ window.Whiteboard = {
         if (this.events.length > 1){
             // console.log(this.events);
             // if (this.events !== this.temp){
-                this.socket.emthis.socket.emit("whiteboard", this.events);
+                this.socket.emit("whiteboard", this.events);
                 // console.log("thisthis e", Whiteboard.socket);it("whiteboard", this.events);
                 // console.log("im here");
                 this.temp = this.events;

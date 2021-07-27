@@ -43,26 +43,32 @@ attendees = {
 
   },
 
-  join : function(sock){
-    arrayVariable = ['ali hasani','mina nayernia','zahra sedaqat','mamad bastin','yekta kamane'];
-    arrayVariablerole = ['host','presenter','presenter','presenter','presenter'];
-    this.arrayVariable = arrayVariable;
-    this.arrayVariablerole = arrayVariablerole;
+  join : function(){
+    // arrayVariable = ['ali hasani','mina nayernia','zahra sedaqat','mamad bastin','yekta kamane'];
+    // arrayVariablerole = ['host','presenter','presenter','presenter','presenter'];
+    // this.arrayVariable = arrayVariable;
+    // this.arrayVariablerole = arrayVariablerole;
 
-    this.socket = sock;
+    // this.socket = sock;
   },
+
+  setSock: function(sock){
+    // console.log(sock);
+    attendees.socket = sock;
+    // console.log("thisthis r", Whiteboard.socket);
+},
 
 
   addUser : function(){
     
     var username = document.getElementById("enter_username");
-    console.log("username:", username.value);
-    this.user_name = username;
-    this.role = "ordinary";
-    attendees.add_new_user(username, "ordinary");
+    // console.log("username:", username.value);
+    // this.user_name = username;
+    // this.role = "ordinary";
+    // attendees.add_new_user(username, "ordinary");
     //this.arrayVariable.push(username.value);
     //this.arrayVariablerole.push('ordinary');
-    this.socket.emit("im new", username.value);
+    attendees.socket.emit("im new", username.value);
     // window.location.href = './main.html';
     attendees.relocate();
   },
@@ -73,14 +79,17 @@ attendees = {
 
   add_new_user : function(user_name, role){
     console.log("im here");
-    this.arrayVariable.push(user_name.value);
+    this.arrayVariable.push(user_name);
     this.arrayVariablerole.push(role);
+    this.arrayLength = this.arrayVariable.length;
+    this.pushAttendee(user_name, role);
   },
 
         /* newly added function below */
 
   pushAttendee : function(username, role){
     var div = document.createElement('div');
+    var i = this.arrayLength - 1;
     div.id = i;
     div.innerHTML = username + "        (" + role + ")";
     document.getElementById('chatmat').appendChild(div);

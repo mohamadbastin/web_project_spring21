@@ -29,7 +29,8 @@
     import { socket } from './socket.js';
 
     $(document).ready(function(){
-            attendees.join(socket);
+            attendees.join();
+            attendees.setSock(socket);
         });
 
 

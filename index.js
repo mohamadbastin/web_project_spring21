@@ -45,8 +45,8 @@ app.get('/', (req, res) => {
 var channels = {};
 var sockets = {};
 
-var names = {};
-var roles = {}
+var attendees = {};
+// var roles = {}
 
 
 io.on('connection', (socket) => {
@@ -96,20 +96,16 @@ io.on('connection', (socket) => {
     socket.on('whiteboard', (msg) => {
 
          // broadcast new white board
-         console.log('boz');
+        //  console.log('boz');
         socket.broadcast.emit("whiteboard", msg);
 
     });
 
-    socket.on("im new", (msg) => {
-      names.push(msg);
-      roles.push("host");
-
-      io.emit("new user", msg);
-    });
+    
 
     socket.on("get initial att", (msg)=>{
-        socket.emit("get inistial att", {names, roles})
+      console.log("init");
+        socket.emit("get inistial att", attendees);
     });
 
     
